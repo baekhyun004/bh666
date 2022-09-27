@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baekhyun.mapper.BookMapper">
+  <resultMap id="BaseResultMap" type="com.baekhyun.model.Book">
+    <id column="b_id" jdbcType="INTEGER" property="bId" />
+    <result column="b_name" jdbcType="VARCHAR" property="bName" />
+    <result column="b_author" jdbcType="VARCHAR" property="bAuthor" />
+    <result column="b_num" jdbcType="INTEGER" property="bNum" />
+    <result column="b_left" jdbcType="INTEGER" property="bLeft" />
+    <result column="b_type" jdbcType="VARCHAR" property="bType" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    b_id, b_name, b_author, b_num, b_left, b_type
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from book
+    where b_id = #{bId,jdbcType=INTEGER}
+  </select>
+  <select id="qureyAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from book
+  </select>
+  <select id="selectBybookType" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from book
+    where b_type = #{bType,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from book
+    where b_id = #{bId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.baekhyun.model.Book">
+    insert into book (b_id, b_name, b_author, 
+      b_num, b_left, b_type)
+    values (#{bId,jdbcType=INTEGER}, #{bName,jdbcType=VARCHAR}, #{bAuthor,jdbcType=VARCHAR}, 
+      #{bNum,jdbcType=INTEGER}, #{bLeft,jdbcType=INTEGER}, #{bType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.baekhyun.model.Book">
+    insert into book
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bId != null">
+        b_id,
+      </if>
+      <if test="bName != null">
+        b_name,
+      </if>
+      <if test="bAuthor != null">
+        b_author,
+      </if>
+      <if test="bNum != null">
+        b_num,
+      </if>
+      <if test="bLeft != null">
+        b_left,
+      </if>
+      <if test="bType != null">
+        b_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bId != null">
+        #{bId,jdbcType=INTEGER},
+      </if>
+      <if test="bName != null">
+        #{bName,jdbcType=VARCHAR},
+      </if>
+      <if test="bAuthor != null">
+        #{bAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="bNum != null">
+        #{bNum,jdbcType=INTEGER},
+      </if>
+      <if test="bLeft != null">
+        #{bLeft,jdbcType=INTEGER},
+      </if>
+      <if test="bType != null">
+        #{bType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.baekhyun.model.Book">
+    update book
+    <set>
+      <if test="bName != null">
+        b_name = #{bName,jdbcType=VARCHAR},
+      </if>
+      <if test="bAuthor != null">
+        b_author = #{bAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="bNum != null">
+        b_num = #{bNum,jdbcType=INTEGER},
+      </if>
+      <if test="bLeft != null">
+        b_left = #{bLeft,jdbcType=INTEGER},
+      </if>
+      <if test="bType != null">
+        b_type = #{bType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where b_id = #{bId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.baekhyun.model.Book">
+    update book
+    set b_name = #{bName,jdbcType=VARCHAR},
+      b_author = #{bAuthor,jdbcType=VARCHAR},
+      b_num = #{bNum,jdbcType=INTEGER},
+      b_left = #{bLeft,jdbcType=INTEGER},
+      b_type = #{bType,jdbcType=VARCHAR}
+    where b_id = #{bId,jdbcType=INTEGER}
+  </update>
+</mapper>

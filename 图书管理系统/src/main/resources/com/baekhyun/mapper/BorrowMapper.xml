@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baekhyun.mapper.BorrowMapper">
+  <resultMap id="BaseResultMap" type="com.baekhyun.model.Borrow">
+    <result column="b_id" jdbcType="INTEGER" property="bId" />
+    <result column="s_id" jdbcType="INTEGER" property="sId" />
+    <result column="b_time" jdbcType="TIMESTAMP" property="bTime" />
+    <result column="r_time" jdbcType="TIMESTAMP" property="rTime" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    b_id, s_id, b_time, r_time, comment
+  </sql>
+  <select id="qureyAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from borrow
+  </select>
+  <select id="selectbybId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from borrow where b_id = #{bId,jdbcType=INTEGER}
+  </select>
+  <insert id="insert" parameterType="com.baekhyun.model.Borrow">
+    insert into borrow (b_id, s_id, b_time, 
+      r_time, comment)
+    values (#{bId,jdbcType=INTEGER}, #{sId,jdbcType=INTEGER}, #{bTime,jdbcType=TIMESTAMP}, 
+      #{rTime,jdbcType=TIMESTAMP}, #{comment,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.baekhyun.model.Borrow">
+    insert into borrow
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bId != null">
+        b_id,
+      </if>
+      <if test="sId != null">
+        s_id,
+      </if>
+      <if test="bTime != null">
+        b_time,
+      </if>
+      <if test="rTime != null">
+        r_time,
+      </if>
+      <if test="comment != null">
+        comment,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bId != null">
+        #{bId,jdbcType=INTEGER},
+      </if>
+      <if test="sId != null">
+        #{sId,jdbcType=INTEGER},
+      </if>
+      <if test="bTime != null">
+        #{bTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rTime != null">
+        #{rTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
